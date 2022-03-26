@@ -1,0 +1,2 @@
+# javascript-essentials
+Javascript Course
