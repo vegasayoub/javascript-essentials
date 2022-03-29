@@ -1117,3 +1117,414 @@ Topics in this section:
  * Array – the slice method
  * Array – the concat method
 
+### Complex data types
+
+We will limit the discussion of complex types to only two of them: objects and arrays. Unfortunately, even these types will have to be presented in a simplified way. This should be enough to use them in their basic scope, but more advanced techniques related to them as well as other complex types will be introduced only in the next parts of the course.
+
+#### Object
+
+Objects have many applications in JavaScript. One of the most basic, and at the same time the only one that we will deal with now, is to use it as a structure known in computer science as a record. A **record** is a collection of named fields. Each field has its own name (or key) and value assigned to it. In the case of JavaScript objects, these fields are usually called properties. Records, or in our case objects, allow you to store multiple values of different types in one place. In JavaScript, there are a few ways to create objects, but the easiest and fastest is to use the curly bracket literal.
+
+```
+let testObj = {};
+console.log(typeof testObj); // -> object
+```
+
+The object we create and store in the variable testObj is not particularly useful, because it’s … empty. We have not defined any fields in it, i.e. any key–value pairs. Let's try it again, this time by defining an object containing two fields with keys nr and str.
+
+```
+let testObj = {
+    nr: 600,
+    str: "text"
+};
+```
+
+Note that we have created objects using the same literal, but at the same time we have created properties that are key–value pairs. Properties are separated by commas. A specific property (field) of an object can later be referred to with dot notation. This notation requires the name of the object (a literal or the name of a variable containing the object) to be followed by a dot, followed by the field name (key) again.
+
+```
+console.log(testObj.nr); // -> 600
+console.log(testObj.str); // -> text
+```
+
+What do we need objects for? The simplest reason for using them may be the desire to store several values in one place, which are linked to each other for some reason.
+
+Let's assume that we collect information about the users of our system. Information about a single user will consist of their first name, last name, age, and email address. Let's try to write an appropriate piece of code for two users, without using objects for now.
+
+```
+let name1 = "Calvin";
+let surname1 = "Hart";
+let age1 = 66;
+let email1 = "CalvinMHart@teleworm.us";
+
+let name2 = "Mateus";
+let surname2 = "Pinto";
+let age2 = 21;
+let email2 = "MateusPinto@dayrep.com";
+```
+
+It seems that everything works correctly, but if we think about it carefully, we will notice two disadvantages. First of all, for each user, you will have to make up separate names of variables for the last name, email, etc. What if we described each user a bit more precisely? Or if there weren’t only two users, but say, a thousand? Then it would be at the least inconvenient. To some extent, we can arrange it with objects. The second problem is that already at the writing stage, we need to know the exact number of users that will be described in the system. This would be extremely limiting in real applications, and it would be better to be able to add them dynamically. We will also be able to improve this, not with objects, but with arrays (more about which in a moment).
+
+So let's improve our piece of code with objects:
+
+```
+let user1 = {
+    name: "Calvin",
+    surname: "Hart",
+    age: 66,
+    email: "CalvinMHart@teleworm.us"
+};
+
+let user2 = {
+    name: "Mateus",
+    surname: "Pinto",
+    age: 21,
+    email: "MateusPinto@dayrep.com"
+};
+```
+
+We still need to give different names for variables that store information (in the form of objects) about individual users, but this time the properties may have the same names. This makes the code not only clearer and more consistent, but it also makes it easier to perform actions on the properties of different users.
+
+The properties of an object, as we have previously indicated, are made available with a dot and a key name. We can both read and modify the value associated with a particular key. What is more, we can also modify the whole object by adding a new, previously non-existent property. We also do this using dot notation – if during an attempt to modify the property the interpreter does not find the key we specify, it will create it.
+
+```
+console.log(user1.name); // -> Calvin
+console.log(user2.name); // -> Mateus
+
+console.log(user1.age); // -> 66
+user1.age = 67;
+console.log(user1.age); // -> 67
+
+console.log(user2.phone); // -> undefined
+user2.phone = "904-399-7557";
+console.log(user2.phone); // -> 904-399-7557
+```
+
+If you can add new fields to an existing object, can you also delete them? Of course you can: the delete operator is used for this.
+
+```
+console.log(user2.phone); // -> 904-399-7557
+delete user2.phone;
+console.log(user2.phone); // -> undefined
+```
+
+The usability of objects goes far beyond using them as data storage structures. However, it is a separate topic, largely related to object-oriented programming, which is part of more advanced programming techniques. In our case, objects will be simple structures, consisting of key–value pairs.
+
+
+#### Array
+
+An **array**, like an object, is a complex data type that can be used to store a data collection. Similar to an object, the stored data (the values) can be of any type. The difference between these structures is that in an array we only store values, without the associated names (i.e. the keys).
+
+So how do we know which element of the array we are referring to if we cannot point to it by name? We know it because the elements of the array are ordered (but not necessarily sorted) and take up consecutive, numbered positions inside it. The number of the field where a particular value in the array is located is called an index or a position. The index starts from 0.
+
+The easiest way to create arrays in JavaScript is to use square brackets (it’s an array literal). This way, we can create both an empty array, into which the elements will be inserted later, and an array containing some initial elements (which will be separated by commas). Referring to a particular array element, we use bracket notation – after the name of the array variable, we write a square parenthesis, in which we put the index of the element we are interested in.
+
+Let's take a look at a simple example:
+
+```
+let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+console.log(days[0]); // -> Sun
+console.log(days[2]); // -> Tue
+console.log(days[5]); // -> Fri
+
+days[0] = "Sunday";
+console.log(days[0]); // -> Sunday
+
+let emptyArray = [];
+console.log(emptyArray[0]); // -> undefined
+```
+
+To begin with, we have declared and initiated the `days` array, which contains seven shortened days of the week names. The elements of this array are data of the String type. Bearing in mind that the indexes (the item positions) in the array start from 0, we display three selected days of the week on the console. Then we change the element at index 0, and the "Sun" value is replaced by "Sunday". The last piece of code is a declaration of an empty array and an attempt to read a non-existent element from it.
+
+How can we add a new element to an existing array, for example, an empty one?
+
+The easiest way would be to assign a new value to a specific position using bracket notation. For the interpreter, it doesn't matter if there is already something in this index or not. It just places a new value in there. What's interesting is that we don't have to fill the array with elements one by one – you can leave empty spaces in it.
+
+```
+let animals = [];
+console.log(animals[0]); // -> undefined
+
+animals[0] = "dog";
+animals[2] = "cat";
+
+console.log(animals[0]); // -> dog
+console.log(animals[1]); // -> undefined
+console.log(animals[2]); // -> cat
+```
+
+In the example, we declare an empty animals array. We then place two elements, "dog" and "cat", in positions 0 and 2, leaving position 1 empty. This, however, is not the only way to add new elements to the array, and we will present others in a moment, as well as ways to remove them.
+
+Usually, we store the same type of data in one array, but as we mentioned earlier, this is not required by JavaScript. So we can easily create an array containing elements of different types.
+
+```
+let values = ["Test", 7, 12.3, false];
+```
+
+As we have already said, an array element can be of any type. What is interesting is the fact that we can also store arrays as elements of the array, and we can access the elements of this nested array using multiple square brackets.
+
+```
+let names = [["Olivia", "Emma", "Mia", "Sofia"], ["William", "James", "Daniel"]];
+console.log(names[0]); // -> ["Olivia", "Emma", "Mia", "Sofia"]
+console.log(names[0][1]); // -> Emma
+console.log(names[1][1]); // -> James
+
+let femaleNames = names[0];
+console.log(femaleNames[0]); // -> Olivia
+console.log(femaleNames[2]); // -> Mia
+```
+
+The example shows an array declaration containing two other arrays as its components. Note that the internal arrays do not have to be the same length (in many other programming languages, this is required).
+
+##### What can arrays be useful for in practice?
+
+They are primarily a convenient way to store a collection of elements under one name. Additionally, it is very important that we can add new elements to an array while the program is running.
+
+Remember the example with the users of the system we tested while discussing objects? One of the downsides of the solution presented there was the need to declare variables for all users, so at the stage of writing the program we had to know the number of users. Using an array, we can add new users while the program is running. We mentioned several times that the array elements can be any data, including objects. As a reminder, let's repeat the example in which we declare two object variables, user1 and user2, containing information about two system users:
+
+```
+let user1 = {
+    name: "Calvin",
+    surname: "Hart",
+    age: 66,
+    email: "CalvinMHart@teleworm.us"
+};
+
+let user2 = {
+    name: "Mateus",
+    surname: "Pinto",
+    age: 21,
+    email: "MateusPinto@dayrep.com"
+};
+```
+
+Let's put information about these two users into the users array and try to display some information as part of the test:
+
+```
+let users =[ 
+    {
+        name: "Calvin",
+        surname: "Hart",
+        age: 66,
+        email: "CalvinMHart@teleworm.us"
+    },
+    {
+        name: "Mateus",
+        surname: "Pinto",
+        age: 21,
+        email: "MateusPinto@dayrep.com"
+    }
+];
+
+console.log(users[0].name); // -> Calvin
+console.log(users[1].age); // -> 21
+```
+
+Let's try to add a new user to the array. We will do it using the only way we know so far, which is by assigning a new element to a free index (this is a continuation of the previous example).
+
+```
+users[2] = {
+    name: "Irene",
+    surname: "Purnell",
+    age: 32,
+    email: "IreneHPurnell@rhyta.com"
+
+}
+
+console.log(users[0].name); // -> Calvin
+console.log(users[1].name); // -> Mateus
+console.log(users[2].name); // -> Irene
+```
+
+During the program's operation, it is possible to interact with the user, for example, to retrieve data the user has entered. Such data could be used to create more objects and extend the array with elements we did not know about while writing the program.
+
+Now let's do a little experiment, and apply the typeof operator to the variable containing the array. The result may be somewhat surprising:
+
+```
+let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+console.log(typeof days); // -> object
+```
+
+To speak quite generally, in JavaScript, everything except primitives is an object. **Arrays** are also treated as a special kind of object. The `typeof` operator does not distinguish between object types (or more precisely, classes), so it informs us that the days variable contains an object. If we would like to make sure that the variable contains an array, we can do it using the `instanceof` operator, among others. It is closely related to object-oriented programming, which we won't talk about in this course, but at the moment we only need to know how to use it in this one specific situation.
+
+```
+let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+let day = "Sunday";
+
+console.log(typeof days); // -> object
+console.log(typeof day); // -> string
+
+console.log(days instanceof Array); // -> true
+console.log(day instanceof Array); // -> false
+```
+
+The `instanceof` operator is a two-argument operator, which requires the tested variable (or literal) and object class to be specified. In our case, the class `isArray`. The operator returns `true` or `false`, depending on the test 
+result.
+
+Quite recently we introduced the concepts of **method** and **property**. They appeared when we were talking about the String type. These were functions and values related to a specific object. Now it turns out that an array is implemented as an object in JavaScript, so it probably also has its methods and properties. And indeed it does. There are many very useful methods that help us to work with arrays, such as combining arrays, cutting out elements, sorting, or filtering.
+
+We will only look at some of them now, because many others require us to be able to create our own functions. We will come back to some of them in the section dedicated to functions.
+
+##### length
+
+The length property is used to get information about the length (the number of elements) of the array (including empty positions between existing elements).
+
+```
+let names  = ["Olivia", "Emma", "Mateo", "Samuel"];
+console.log(names.length); // -> 4
+
+names[5] = "Amelia";
+console.log(names.length); // -> 6
+
+console.log(names); // -> ["Olivia", "Emma", "Mateo", 
+"Samuel", undefined, "Amelia"]
+console.log(names[3]); // -> Samuel
+console.log(names[4]); // -> undefined
+console.log(names[5]); // -> Amelia
+```
+
+##### indexOf
+
+The `indexOf` method is used to search the array to locate a given value. If the value is found (the element is in the array), its index (position) will be returned. The method returns -1 if the element is not found. If there is more than one element with the same value in the array, the index of the first element is returned.
+
+```
+let names = ["Olivia", "Emma", "Mateo", "Samuel"];
+console.log(names.indexOf("Mateo")); // -> 2
+console.log(names.indexOf("Victor")); // -> -1
+```
+
+![](images/indexof.png)
+
+##### push
+
+The `push` method places the element given as its argument at the end of the array. The length of the array is increased by 1, and the new element is inserted on the right (it has the largest index of all elements).
+
+```
+let names = ["Olivia", "Emma", "Mateo", "Samuel"];
+console.log(names.length); // -> 4
+
+names.push("Amelia");
+console.log(names.length); // -> 5
+console.log(names); // - > ["Olivia", "Emma", "Mateo", 
+"Samuel", "Amelia"]
+```
+
+![](images/push.png)
+
+
+##### unshift
+
+The `unshift` method works similarly to push, the difference being that a new element is added to the beginning of the array. The array length is increased by 1, all the old elements are moved to the right and the new element is placed in the empty space that has been created at the beginning of the array. The index of the new element is 0.
+
+```
+let names = ["Olivia", "Emma", "Mateo", "Samuel"];
+console.log(names.indexOf("Mateo")); // -> 2
+console.log(names.indexOf("Victor")); // -> -1
+```
+
+![](images/unshift.png)
+
+
+##### pop
+
+The `pop` method allows you to remove the last element from the array. As a result of its execution, the element with the largest index is returned, while at the same time it is removed from the original array. The length of the array is obviously reduced by 1.
+
+```
+let names= ["Olivia", "Emma", "Mateo", "Samuel"];
+console.log(names.length); // -> 4
+
+let name = names.pop();
+console.log(names.length); // -> 3
+console.log(name); // -> Samuel
+console.log(names); // -> ["Olivia", "Emma", "Mateo"]
+```
+
+![](images/pop.png)
+
+
+##### shift
+
+The `shift` method works similarly to pop, only this time we remove the element from the beginning of the array (with the index 0). The removed element is returned by the method, and all other elements are shifted to the left, filling the empty space. The length of the original array is reduced by 1.
+
+```
+let names = ["Olivia", "Emma", "Mateo", "Samuel"];
+console.log(names.length); // -> 4
+
+let name = names.shift();
+console.log(names.length); // -> 3
+console.log(name); // -> Olivia
+console.log(names); // -> ["Emma", "Mateo", "Samuel"]
+```
+
+![](images/shift.png)
+
+
+##### reverse
+
+The `reverse` method inverts the order of the array.
+
+```
+let names = ["Olivia", "Emma", "Mateo", "Samuel"];
+
+names.reverse();
+console.log(names); // -> ["Samuel", "Mateo", "Emma",
+ "Olivia"]
+```
+
+![](images/reverse.png)
+
+
+##### slice
+
+The `slice` method allows you to create a new array from selected elements of the original array. Calling the method does not affect the original array. The method takes either one or two integer values as arguments.
+
+The basic combinations are:
+
+ * one argument larger than zero – all elements from the index given as an argument to the end of the array are copied;
+ * two arguments larger than zero – the element from the index specified as the first argument to the element specified as the second argument are copied;
+ * two arguments, first positive, second negative – all elements from the specified index to the end of the array are copied, except for the specified number of the last elements (e.g. argument -3 means that we do not copy the last three elements)
+ * one negative argument – the specified number of the last elements are copied to the end of the array (e.g. -2 means that you copy the last two elements).
+
+```
+let names = ["Olivia", "Emma", "Mateo", "Samuel"];
+
+let n1 = names.slice(2);
+console.log(n1); // -> ["Mateo", "Samuel"]
+
+let n2 = names.slice(1,3);
+console.log(n2); // -> ["Emma", "Mateo"]
+
+let n3 = names.slice(0, -1);
+console.log(n3); // -> ["Olivia", "Emma", "Mateo"]
+
+let n4 = names.slice(-1);
+console.log(n4); // -> ["Samuel"]
+
+console.log(names); // -> ["Olivia", "Emma", "Mateo",
+ "Samuel"]
+```
+
+##### concat
+
+The `concat` method creates a new array by attaching elements from the array given as an argument to the original array elements. The method changes neither the original array nor the array specified as an argument.
+
+```
+let names = ["Olivia", "Emma", "Mateo", "Samuel"];
+let otherNames = ["William", "Jane"];
+let allNames = names.concat( otherNames);
+
+console.log(names); // -> ["Olivia", "Emma", "Mateo",
+ "Samuel"]
+console.log(otherNames); // -> ["William", "Jane"]
+console.log(allNames); // -> ["Olivia", "Emma", "Mateo", "Samuel", "William", "Jane"]
+```
+
+So far, arrays are the most complicated programming element we've learned. So it wouldn't be any wonder if you needed to go through this part of the course once more. Arrays are very important, so it is worth taking some more time to understand them well. We will return to arrays more than once, among other things when discussing loops and functions.
+
+### Summary
+
+This chapter contains quite a lot of information. We started the chapter with a discussion of simple types, which apart from the String type, shouldn't really cause any problems. The Number, BigInt, or Boolean types are not by chance called primitive.
+
+While discussing the String type, we learned what autoboxing is (automatic conversion of a primitive to an object related to that primitive) and how we can use methods related to the String object.
+
+Some space was devoted to discussing data conversion. At the end we looked at some basic information about complex types, limiting ourselves to objects and arrays. Remember that we introduced objects in a very simplified form, which will allow us to use them as records (i.e. data types consisting of key–value fields). What we discussed is related to object-oriented programming, which you may have heard about, but is not part of the current course.
+
+Arrays have been discussed in a little more detail. We will come back to them more than once, because they are one of the basic elements used in practice. We will expand on them in the loops and functions part of the course.
