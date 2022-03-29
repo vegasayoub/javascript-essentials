@@ -1528,3 +1528,105 @@ While discussing the String type, we learned what autoboxing is (automatic conve
 Some space was devoted to discussing data conversion. At the end we looked at some basic information about complex types, limiting ourselves to objects and arrays. Remember that we introduced objects in a very simplified form, which will allow us to use them as records (i.e. data types consisting of key–value fields). What we discussed is related to object-oriented programming, which you may have heard about, but is not part of the current course.
 
 Arrays have been discussed in a little more detail. We will come back to them more than once, because they are one of the basic elements used in practice. We will expand on them in the loops and functions part of the course.
+
+
+## Section 4 - Comments
+
+Topics in this section:
+
+ * Single-line comments
+ * Multi-line comments
+ * Documentation
+ * Code toggle
+
+### Comments
+
+Comments are a common thing in programming. "Commenting" may not be a key programming technique (if you can call it a technique), but it allows you to improve your work with the code, among other things by making it more readable. So what are comments, and why do we need them?
+
+Comments are just plain text, totally ignored by the JavaScript interpreter, that usually serve to explain a certain piece of code, which for some reasons may not be fully legible. However, we cannot write them completely freely, as the interpreter will try to treat them as commands, variable names, or keywords. So JavaScript needs to distinguish comments from the rest of the code. In JavaScript, we have two types of comments, and both are commonly used in many programming languages, from the C language family to Python. They are called single-line and multi-line comments.
+
+#### Single-line comments
+
+This is the primary way to comment code. It uses a double slash character at the start of the comment that spans to the end of the line. Any code placed to the right of the double slash will be ignored by the interpreter. If we want to create comments in this way over several lines, we have to put // in each line separately. You have probably noticed that we have used this type in previous examples.
+
+```
+// This is a single-line comment
+let x = 42; // This is also a single line comment, although the part before the double slash is proper code and will be executed
+// This line and the next one will be ignored
+// x = 8;
+console.log(x); // -> 42
+```
+
+In most modern code editors, it is possible to "comment" selected code fragments using keyboard shortcuts. This means that we can place the cursor in the selected line of code and by pressing a specific combination of keys we can place a comment sign at the beginning of the line. Pressing the same combination again will "uncomment" the comment character. Usually, it is also possible to mark several lines (with a mouse, or using the arrow keys with the Shift key pressed) and place a comment character at the beginning of all marked lines using the same key combination. This mechanism is supported by applications like Sublime Text or Visual Studio Code, two editors we recommended earlier. Try it in the editor of the OpenEDG platform you are currently using. This combination of keys we’re talking about is the most common in Windows:
+
+ctrl + /
+
+while in macOS:
+
+command + /
+
+This method is most often used for "commenting" (i.e. temporarily disabling) a selected piece of code, for example, to test an alternative version of it.
+
+
+#### Multi-line comments
+
+Multi-line comments, also known as block comments, allow for comments to span multiple lines, but also allow you to place comments inside a line, which is not possible with single-line comments. They are created with a slash and an asterisk at the start of the comment and an asterisk and a slash at the end.
+
+```
+/*
+    This is a block
+    comment and it can
+    span multiple lines
+
+    So this code won't be executed
+    console.log("Hello, World!");
+*/
+
+let x /* because no better name */ = 42;
+console.log(x);
+```
+
+
+### But why comment in the first place?
+
+As was already stated, it’s very important to give proper and informative names to variables (and also functions and anything else we can name) but even the best names will not help if the code is complex. And code gets complex pretty easily. So to help developers to express their intent for a given piece of code, they use comments to explain themselves more verbally.
+
+These of course are exaggerated examples of comments just to show you how to use them. In real-life applications and scripts, comments should be used wisely, as too many obvious comments will make the code even harder to read.
+
+As a rule of thumb, comments should be used when reading the code is not enough to understand what it does, or in situations where the code behaves differently than expected and you need to show that it’s intentional. You also need to remember that in most commercial projects, you’re not the only person that will read this code. And even if you were, reading your own code after a few months is challenging, and reading someone else’s code can take that challenge to the next level.
+
+```
+// setting greetingText to Hello - BAD
+const greetingText = "Hello";
+
+angle = angle + 90; // rotate 90 degrees to compensate for vertical screen. - GOOD
+
+// TODO add check for 0 as divisor - GOOD
+let result = a / b;
+
+// No check needed for b - guaranteed not a zero - GOOD
+let result = a / b;
+
+// Dividing a by b - BAD
+let result = a / b;
+```
+
+#### Documentation
+
+We can use comments to document code, and to write down exactly what functions do and what parameters they require. In many projects, files have a header with information about the author, licensing, or history of changes. There are tools that can automatically generate documentation from comments, as long as they are used according to the tools reference. An example of such a tool could be JSDoc. Placing comments in the code according to the format of this tool will make it possible to generate a website containing detailed information about a project (e.g. descriptions of functions, their call parameters, returned values etc.).
+
+#### Code toggle
+
+Sometimes we have some fragment of code we think is causing some problems, or want to check a few options quickly. Commenting out code is a great tool to help with that.
+
+```
+// const greetingText = "Hi";
+const greetingText = "Hello";
+// const greetingText = "Welcome";
+```
+
+We can disable each line of code by using single-line comments as in the example. Using block comments, we can comment out big fragments of code, or whole functions. This is very helpful when pinpointing some code issues.
+
+### Summary
+
+At the moment, using comments may seem to you to be just a curiosity. Remember, however, that with time, you will start to write programs that will become more and more complex. They will consist of many files, with hundreds or thousands of lines of code. Comments give you the opportunity to increase the clarity of the code by adding information that will help others to understand selected parts of it. The next step will be the ability to generate project documentation based on them, although in order to do so you will need to adjust your comments to the convention imposed by the selected tool. Comments are also very useful for turning selected pieces of code on and off, which we use most often when testing alternative versions or when searching for errors in it.
